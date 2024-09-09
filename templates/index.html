@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Recommendation</title>
+
+    <!-- Add some basic CSS for better design -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 18px;
+            color: #555;
+            display: block;
+            margin: 10px 0;
+        }
+
+        input, select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .error {
+            color: red;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+
+    <!-- Include jQuery for simple AJAX handling -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Function to handle form submission via AJAX
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                e.preventDefault(); // Prevent form from submitting normally
+
+                var cropType = $('#crop_type').val(); // Get selected crop
+                var temperature = $('#temperature').val(); // Get temperature
+                var area = $('#area').val(); // Get area in acres
+                var nitrogen = $('#nitrogen').val(); // Get soil nitrogen level
+                var phosphorus = $('#phosphorus').val(); // Get soil phosphorus level
+                var potassium = $('#potassium').val(); // Get soil potassium level
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/recommend',
+                    data: { crop_type: cropType, temperature: temperature, area: area, nitrogen: nitrogen, phosphorus: phosphorus, potassium: potassium },
+                    success: function(response) {
+                        // Display the recommendation
+                        var deficiencies = Object.keys(response.recommendation.recommendations).map(function(fertilizer) {
+                            var info = response.recommendation.recommendations[fertilizer];
+                            return `<strong>${fertilizer}</strong>: ${info.quantity_needed.toFixed(2)} kg at ${info.cost.toFixed(2)} local currency<br>`;
+                        }).join('');
+
+                        $('.result').html(`
+                            <strong>Crop:</strong> ${response.crop}<br>
+                            <strong>Nitrogen (N):</strong> ${response.recommendation.nutrients.nitrogen} kg/ha<br>
+                            <strong>Phosphorus (P):</strong> ${response.recommendation.nutrients.phosphorus} kg/ha<br>
+                            <strong>Potassium (K):</strong> ${response.recommendation.nutrients.potassium} kg/ha<br>
+                            <strong>Temperature Range:</strong> ${response.recommendation.temperature}<br>
+                            <strong>Area Range:</strong> ${response.recommendation.area}<br>
+                            <strong>Fertilizer Recommendations:</strong><br>
+                            ${deficiencies}
+                        `);
+                        $('.error').html('');  // Clear any previous error
+                    },
+                    error: function(response) {
+                        $('.result').html('');  // Clear the result section
+                        $('.error').html('Error: ' + response.responseJSON.error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Fertilizer Recommendation System</h1>
+        <form>
+            <label for="crop_type">Select Crop:</label>
+            <select name="crop_type" id="crop_type" required>
+                <option value="" disabled selected>-- Choose a crop --</option>
+                <option value="Wheat">Wheat</option>
+                <option value="Rice">Rice</option>
+                <option value="Corn">Corn</option>
+            </select>
+
+            <label for="temperature">Temperature (°C):</label>
+            <input type="number" id="temperature" name="temperature" step="0.1" required>
+
+            <label for="area">Area (acres):</label>
+            <input type="number" id="area" name="area" step="0.1" required>
+
+            <label for="nitrogen">Soil Nitrogen (kg/ha):</label>
+            <input type="number" id="nitrogen" name="nitrogen" step="0.1" required>
+
+            <label for="phosphorus">Soil Phosphorus (kg/ha):</label>
+            <input type="number" id="phosphorus" name="phosphorus" step="0.1" required>
+
+            <label for="potassium">Soil Potassium (kg/ha):</label>
+            <input type="number" id="potassium" name="potassium" step="0.1" required>
+
+            <button type="submit">Get Recommendations</button>
+        </form>
+
+        <div class="result"></div>
+        <div class="error"></div>
+    </div>
+
+</body>
+</html>
