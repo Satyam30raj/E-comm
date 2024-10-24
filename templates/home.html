@@ -5,7 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Krishak Suvidha</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" href="static/Material/img/favicon.png" type="static/image/x-icon" />
     <link rel="stylesheet" href="static/Material/CSS/Style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -89,12 +91,27 @@
         }
 
         .btn_2:hover {
-            background-color: #e68a00;
+            background-color:  #e68a00;
         }
 
-        #preview {
-            margin-top: 10px;
-            max-width: 300px;
+        /* Responsive Menu */
+        .nav_menu {
+            display: none;
+        }
+
+        .nav_menu_btn {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .hero_box {
+            background-color: #444;
         }
     </style>
 </head>
@@ -107,7 +124,7 @@
         <nav class="nav">
             <div class="nav_logo">
                 <a href="index.html">
-                    <span>KrishakSuvidha.in</span></a>
+                <span>KrishakSuvidha.in</span></a>
             </div>
             <div class="right_nav">
                 <div class="nav_menu" id="navMenu">
@@ -118,11 +135,45 @@
                         <li class="list">
                             <a href="index.html" class="link">Home</a>
                         </li>
+
                         <li class="list">
-                            <a href="#myModal1" class="link" id="myBtn">Services<i class="fa-solid fa-caret-down"></i></a>
+                            <a href="#myModal1" class="link" id="myBtn">Services<i
+                                    class="fa-solid fa-caret-down"></i></a>
+                            <div class="description_box">
+                                <div class="link_description" id="myDescription">
+                                    <div class="content-title">
+                                        <span>Services We Offer</span>
+                                    </div>
+                                    <div class="desc_content">
+                                        <p>
+                                            We work together with our team to offer best services in:
+                                        </p>
+                                        <ul class="services_list">
+                                            <li>▸ Soil Report Management.</li>
+                                            <li>▸ Providing Knowledge of plant diseases aids.</li>
+                                            <li>▸ Seasonal Weather forecasting assists directly to farmers.</li>
+                                            <li>▸ Market analysis helps farmers strategize for risk management.</li>
+                                            <li>▸ Cashback Points to our Users for their benefits.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                         <li class="list">
                             <a href="#myModal2" class="link" id="myBtn">About <i class="fa-solid fa-caret-down"></i></a>
+                            <div class="description_box about_box">
+                                <div class="link_description" id="myDescription">
+                                    <div class="content-title">
+                                        <span>About Us</span>
+                                    </div>
+                                    <div class="desc_content">
+                                        <p>
+                                            A website for Indian farmers, offering services like Soil and Crop Report through image recognition, disease information, market analysis, weather forecasts, e-commerce, memberships, and farming tips to improve agricultural efficiency and yield.
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -140,6 +191,27 @@
         <main class="main">
             <div class="row hero">
                 <div class="col col-1">
+                    <div class="social_icons">
+                        <!-- ===== Icon animated circle ===== -->
+                        <div class="icon_circle"></div>
+
+                        <!-- ===== Social Icons  ===== -->
+                        <a href="https://www.linkedin.com/in/satyam-raj-5a6a92194/" target="_blank"
+                            style="text-decoration: none" rel="noopener noreferrer">
+                            <i class="fa-brands fa-linkedin-in icon"></i>
+                        </a>
+
+                        <a href="https://www.instagram.com/raj.satyam_/" target="_blank"
+                            style="text-decoration: none" rel="noopener noreferrer">
+                            <i class="fa-brands fa-instagram icon"></i>
+                        </a>
+
+                        <a href="https://www.facebook.com/profile.php?id=100017887120021"
+                            target="_blank" style="text-decoration: none" rel="noopener noreferrer">
+                            <i class="fa-brands fa-facebook icon"></i>
+                        </a>
+                    </div>
+
                     <div class="hero_box">
                         <div class="job">
                             <span class="multiText"></span>
@@ -151,9 +223,9 @@
                         </div>
                         <div class="hero_btn">
                             <h2>Upload Image</h2>
-                            <a href="#" class="btn_1" id="uploadLink">Upload Image</a>
-                            <input type="file" accept="image/*" capture="camera" id="fileInput" style="display: none;">
-                            <img id="preview" alt="Image preview will appear here" />
+<a href="#" class="btn_1" id="uploadLink">Upload Image </a>
+<input type="file" accept="image/*" capture="camera" id="fileInput" style="display: none;">
+<img id="preview" alt="Image preview will appear here" />
                             <a href="/index" class="btn_1">Check preferable Fertiliser to use !!</a>
                             <button class="btn_2">
                                 <a href="#" target="_blank">Download Brochure</a>
@@ -170,7 +242,6 @@
             </div>
         </main>
     </div>
-
     <footer class="bg-blueGray-200 pt-8 pb-6 footer-sec w-[100%] flex justify-center">
         <div class="container mx-auto px-4 w-[90%]">
             <div class="flex flex-wrap text-left lg:text-left">
@@ -179,6 +250,7 @@
                     <h5 class="text-lg mt-0 mb-2 text-blueGray-600">
                         Ready to take your Crops with a healthy manner!
                     </h5>
+
                     <div class="mt-6 lg:mb-0 mb-6">
                         <button class="footer-btns bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 hover:bg-[#ffa500] duration-300 curser-pointer">
                             <a href="https://www.linkedin.com/in/satyam-raj-5a6a92194/" target="_blank" rel="noopener noreferrer" class="text-blueGray-400 text-xl"><i class="fa-brands fa-linkedin-in icon"></i></a>
@@ -196,21 +268,7 @@
     </footer>
 
     <script src="static/Material/js/index.js"></script>
-    <script>
-        const uploadLink = document.getElementById('uploadLink');
-        const fileInput = document.getElementById('fileInput');
-        const preview = document.getElementById('preview');
+</body>
 
-        uploadLink.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent the default link behavior
-            fileInput.click(); // Trigger the hidden file input
-        });
-
-        fileInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result; // Set the image preview
-                };
+</html>
 
